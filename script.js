@@ -1,90 +1,112 @@
-// Pantalla de inicio
-function startExperience() {
-    document.getElementById('intro-screen').style.display = 'none';
-    document.getElementById('desktop-screen').style.display = 'block';
-}
+<script>
+        // Variables de audio
+        const bgm = document.getElementById('bgm');
+        const clickSound = document.getElementById('sfx-click');
 
-// Abrir ventanas
-function openWindow(windowId) {
-    document.querySelectorAll('.retro-window:not(.full-screen-window)').forEach(w => w.style.display = 'none');
-    document.getElementById('window-' + windowId).style.display = 'flex';
-    // Si abre la carta, aseguramos que el popup esté cerrado
-    if (windowId === 'carta') {
-        document.getElementById('valentine-popup').style.display = 'none';
-    }
-}
+        // Ajustar volumen (opcional: 0.5 es 50%)
+        bgm.volume = 0.4; 
+        clickSound.volume = 0.6;
 
-// Cerrar ventanas
-function closeWindow(windowId) {
-    document.getElementById('window-' + windowId).style.display = 'none';
-    if (windowId === 'carta') {
-        const iframe = document.querySelector('#window-carta iframe');
-        if (iframe) { const tempSrc = iframe.src; iframe.src = ''; iframe.src = tempSrc; }
-    }
-}
-
-// === LÓGICA DEL POPUP ===
-
-function mostrarPopupValentine() {
-    const popup = document.getElementById('valentine-popup');
-    popup.style.display = 'flex';
-
-    // RESETEAR: Mostrar pregunta, ocultar celebración
-    document.getElementById('step-pregunta').style.display = 'block';
-    document.getElementById('step-respuesta').style.display = 'none';
-
-    // RESETEAR POSICIÓN DEL BOTÓN NO
-    const btnNo = document.getElementById('btn-no');
-    btnNo.style.position = 'static'; 
-    btnNo.style.left = 'auto';
-    btnNo.style.top = 'auto';
-}
-
-function cerrarPopup() {
-    document.getElementById('valentine-popup').style.display = 'none';
-}
-
-function aceptarValentine() {
-    document.getElementById('step-pregunta').style.display = 'none';
-    document.getElementById('step-respuesta').style.display = 'block';
-}
-
-// === BOTÓN ESCURRIDIZO (Con detección de área segura) ===
-function moverBoton() {
-    const btnNo = document.getElementById('btn-no');
-    const container = document.querySelector('.modal-buttons');
-    const rect = container.getBoundingClientRect();
-    const buffer = 40; // Espacio de seguridad para no tapar el botón SÍ
-
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const btnW = btnNo.offsetWidth;
-    const btnH = btnNo.offsetHeight;
-
-    let newX, newY;
-    let esSeguro = false;
-    let intentos = 0;
-
-    // Intentamos encontrar un lugar seguro
-    while (!esSeguro && intentos < 15) {
-        newX = Math.random() * (width - btnW - 20);
-        newY = Math.random() * (height - btnH - 20);
-
-        // Si la nueva posición NO choca con la zona original de los botones
-        if (
-            newX + btnW < rect.left - buffer || 
-            newX > rect.right + buffer ||       
-            newY + btnH < rect.top - buffer ||  
-            newY > rect.bottom + buffer         
-        ) {
-            esSeguro = true;
+        function reproducirClick() {
+            // Reinicia el audio para poder tocarlo rapido varias veces
+            clickSound.currentTime = 0; 
+            clickSound.play().catch(e => console.log("Audio bloqueado hasta interactuar"));
         }
-        intentos++;
-    }
 
-    // Mover el botón
-    btnNo.style.position = 'fixed';
-    btnNo.style.left = newX + 'px';
-    btnNo.style.top = newY + 'px';
-    btnNo.style.zIndex = "100000"; 
-}
+        // --- 0. INICIO ---
+        function iniciarSistema() {
+            reproducirClick(); // Suena click
+            
+            // INICIA LA MÚSICA DE FONDO
+            bgm.play().then(() => {
+                console.log("Música iniciada");
+            }).catch(error => {
+                console.log("El navegador bloqueó el autoplay, intenta interactuar más.");
+            });
+
+            const pantallaInicio = document.getElementById('pantalla-inicio');
+            const escritorio = document.getElementById('escritorio');
+            
+            pantallaInicio.style.opacity = '0';
+            setTimeout(() => {
+                pantallaInicio.style.display = 'none';
+                escritorio.style.display = 'flex';
+            }, 800);
+        }
+
+        // --- 1. VENTANAS (Carpetas) ---
+        function abrirVentana(id) {
+            reproducirClick(); // Suena click
+            document.querySelectorAll('.ventana-pixel').forEach(v => v.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+        
+        function cerrarVentana(id) {
+            reproducirClick(); // Suena click
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // --- 2. MODOS DE LECTURA (Carta/Playlist) ---
+        function abrirModoLectura(idOverlay) {
+            reproducirClick(); // Suena click
+            
+            // PAUSAR MÚSICA DE FONDO (Para escuchar el video o spotify)
+            bgm.pause();
+
+            document.getElementById('escritorio').style.display = 'none';
+            document.getElementById(idOverlay).style.display = 'flex';
+        }
+        
+        function cerrarModoLectura(idOverlay) {
+            reproducirClick(); // Suena click
+            
+            // REANUDAR MÚSICA DE FONDO
+            bgm.play();
+
+            document.getElementById(idOverlay).style.display = 'none';
+            document.getElementById('escritorio').style.display = 'flex';
+            document.getElementById('win-corazon').style.display = 'block';
+        }
+
+        // --- 3. SAN VALENTIN ---
+        function mostrarModalPregunta() {
+            reproducirClick();
+            document.getElementById('modal-backdrop').style.display = 'flex';
+            document.getElementById('modal-pregunta').style.display = 'block';
+        }
+        
+        function aceptarValentin() {
+            reproducirClick();
+            document.getElementById('modal-pregunta').style.display = 'none';
+            document.getElementById('modal-exito').style.display = 'block';
+            
+            // Opcional: Subir volumen para celebrar
+            bgm.volume = 1.0; 
+        }
+        
+        function volverAlEscritorio() {
+            reproducirClick();
+            // Si el video de la carta seguía sonando, esto lo detiene:
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => video.pause());
+
+            document.getElementById('modal-backdrop').style.display = 'none';
+            document.getElementById('modal-exito').style.display = 'none';
+            document.getElementById('overlay-carta').style.display = 'none';
+            document.getElementById('escritorio').style.display = 'flex';
+            document.querySelectorAll('.ventana-pixel').forEach(v => v.style.display = 'none');
+            
+            // Asegurar que la música de fondo suene de nuevo
+            bgm.play();
+        }
+
+        function esquivar() {
+            const btn = document.getElementById('btn-no');
+            // Sonido opcional al esquivar (puedes quitarlo si molesta)
+            // reproducirClick(); 
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            btn.style.position = 'fixed'; btn.style.left = x + 'px'; btn.style.top = y + 'px';
+            btn.style.zIndex = 1000;
+        }
+    </script>
