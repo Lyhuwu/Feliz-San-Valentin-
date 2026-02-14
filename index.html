@@ -19,7 +19,9 @@
 
     <div id="escritorio" class="escritorio" style="display: none;">
         
-        <div class="burbuja-comic">Hola mi corazón, esto es para ti con mucho amor. 💌</div>
+        <div class="burbuja-comic">
+            Hola mi corazón, esto es para ti, ¡que lo disfrutes! 💌
+        </div>
 
         <div class="fila-iconos">
             <div class="icono-app" onclick="abrirVentana('win-corazon')">
@@ -38,10 +40,11 @@
                 <button class="btn-x" onclick="cerrarVentana('win-corazon')">X</button>
             </div>
             <div class="contenido-pixel">
+                <p class="pixel-text">Lo que hay dentro...</p>
                 <div class="grid-pixel">
                     <div class="item-pixel" onclick="abrirModoLectura('overlay-carta')">
                         <img src="assets/icon-heart.gif" alt="Carta">
-                        <p>Cartita💖</p>
+                        <p>Cartita con<br>cariño💖</p>
                     </div>
                     <div class="item-pixel" onclick="abrirModoLectura('overlay-playlist')">
                         <img src="assets/icon-music.gif" alt="Playlist">
@@ -49,7 +52,7 @@
                     </div>
                     <div class="item-pixel" onclick="navegar('https://lyhuwu.github.io/Universo/')">
                         <img src="assets/universo.gif" alt="Universo">
-                        <p>Mi Universo</p>
+                        <p>El centro de<br>MI universo</p>
                     </div>
                 </div>
             </div>
@@ -61,14 +64,15 @@
                 <button class="btn-x" onclick="cerrarVentana('win-juegos')">X</button>
             </div>
             <div class="contenido-pixel">
+                <p class="pixel-text">¡A jugar! 🎮</p>
                 <div class="grid-pixel">
                     <div class="item-pixel" onclick="navegar('https://lyhuwu.github.io/Tu-suerte/')">
                         <img src="assets/suerte.gif" alt="Suerte">
-                        <p>Tu Suerte</p>
+                        <p>Descubre tu<br>fortuna</p>
                     </div>
                     <div class="item-pixel" onclick="navegar('https://lyhuwu.github.io/Monkys/')">
                         <img src="assets/icon-monkey.gif" alt="Monkys">
-                        <p>Monkys</p>
+                        <p>Ayuda al<br>monito</p>
                     </div>
                 </div>
             </div>
@@ -84,8 +88,12 @@
                 </video>
             </div>
             <div class="caja-glass texto-box">
-                <p class="typewriter">Aquí va tu carta para Sofi...</p>
-                <button class="btn-pixel-diseno" onclick="mostrarModalPregunta()">TENGO UNA PREGUNTA...</button>
+                <p class="typewriter">Mi amor,</p><br>
+                <p class="typewriter">Hoy quiero pausar el tiempo...</p><br>
+                <p class="typewriter">(ESCRIBE AQUÍ TU CARTA...)</p><br>
+                <p class="typewriter">Te amo, siempre.</p>
+                <br>
+                <button class="btn-pregunta-carta" onclick="mostrarModalPregunta()">TENGO UNA PREGUNTA...</button>
             </div>
         </div>
     </div>
@@ -100,13 +108,24 @@
     </div>
 
     <div id="modal-backdrop" class="modal-backdrop" style="display:none;">
-        <div id="modal-pregunta" class="popup-pixel-art">
-            <h2 style="color: #ff69b4;">¿Quieres ser mi San Valentín? 💖</h2>
-            <div class="botones-row">
-                <button class="btn-pixel-diseno btn-si" onclick="aceptarValentin()">¡SÍ!</button>
-                <button id="btn-no" class="btn-pixel-diseno btn-no" onmouseover="esquivar()">NO</button>
+        
+        <div id="modal-pregunta" class="modal-rosa">
+            <p class="texto-pequeno">Después de leer<br>todo esto...</p>
+            <h2 class="titulo-rosa">¿Quieres ser<br>San Valentín? 💖</h2>
+            
+            <div class="botones-modal">
+                <button class="btn-si-quiero" onclick="aceptarValentin()">¡SÍ,<br>QUIERO!</button>
+                <button id="btn-no" class="btn-no-se" onmouseover="esquivar()" ontouchstart="esquivar()">MMM,<br>NO C SÉ</button>
             </div>
         </div>
+
+        <div id="modal-exito" class="modal-rosa" style="display:none;">
+            <div style="font-size: 30px; margin-bottom: 10px;">🎉🥰🎉</div>
+            <h2 class="titulo-rosa" style="font-size: 16px;">AYAYAYAY<br>DIJISTE QUE SÍ</h2>
+            <p class="texto-pequeno" style="margin: 15px 0;">Te amo infinito+1.</p>
+            <button class="btn-volver" onclick="volverAlEscritorio()">VOLVER AL ESCRITORIO</button>
+        </div>
+
     </div>
 
     <script src="script.js"></script>
