@@ -1,4 +1,4 @@
-/* RESET Y FONDO GLOBAL */
+/* RESET */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body { 
@@ -7,80 +7,55 @@ body {
     overflow: hidden;
 }
 
-/* LA CLAVE: Fondo con GIF en la intro */
-.pantalla-inicio {
-    position: fixed; 
-    inset: 0; 
-    background: url('assets/fondo-pixel.gif') no-repeat center center/cover;
-    z-index: 1000;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    text-align: center;
-    transition: opacity 0.8s;
-}
-
-/* Overlay oscuro suave sobre el GIF de la intro para que el texto se lea bien */
-.pantalla-inicio::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: -1;
-}
-
-.titulo-intro { 
-    font-family: 'Press Start 2P'; 
-    color: #fff; 
-    text-shadow: 4px 4px #ff69b4;
-    margin-bottom: 20px; 
-}
-
-/* BOTONES PIXEL */
+/* BOTÓN PIXEL UNIFICADO */
 .btn-pixel-diseno {
     background: #ff69b4;
     color: white;
     border: 4px solid #fff;
     padding: 10px 20px;
     font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
+    font-size: 10px;
     cursor: pointer;
     box-shadow: 4px 4px 0px #000;
+    text-transform: uppercase;
 }
+.btn-pixel-diseno:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #000; }
 
-/* ESCRITORIO CON EL MISMO GIF */
-.escritorio { 
-    width: 100%; 
-    height: 100vh; 
+/* PANTALLAS */
+.pantalla-inicio {
+    position: fixed; inset: 0; 
     background: url('assets/fondo-pixel.gif') no-repeat center center/cover;
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    padding-top: 50px;
+    z-index: 1000; display: flex; justify-content: center; align-items: center; text-align: center;
+    transition: opacity 0.8s;
+}
+.pantalla-inicio::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); z-index: -1; }
+
+.escritorio { 
+    width: 100%; height: 100vh; 
+    background: url('assets/fondo-pixel.gif') no-repeat center center/cover;
+    display: flex; flex-direction: column; align-items: center; padding-top: 50px;
 }
 
-/* VENTANAS Y DEMÁS DISEÑOS */
+/* VENTANAS ESTILO WINDOWS RETRO */
 .ventana-pixel {
     background: #f0f0f0; border: 4px solid #000; width: 320px;
-    position: absolute; top: 20%; z-index: 100;
+    position: absolute; top: 15%; z-index: 100;
 }
-
 .barra-titulo {
     background: #ff69b4; color: #fff; padding: 5px 10px;
     display: flex; justify-content: space-between; border-bottom: 4px solid #000;
 }
+.contenido-pixel { padding: 20px; }
+.grid-pixel { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
+/* GLASSMORPHISM */
 .overlay-clean {
     position: fixed; inset: 0; background: rgba(255, 192, 203, 0.7);
-    backdrop-filter: blur(10px); z-index: 500; display: flex; 
-    justify-content: center; align-items: center;
+    backdrop-filter: blur(10px); z-index: 500; display: flex; justify-content: center; align-items: center;
 }
+.caja-glass { background: rgba(255, 255, 255, 0.3); border-radius: 20px; padding: 20px; backdrop-filter: blur(5px); }
 
-.modal-backdrop {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-    z-index: 1000; display: flex; justify-content: center; align-items: center;
-}
-
-.popup-pixel-art {
-    background: #fff; border: 4px solid #000; padding: 30px; text-align: center;
-}
+/* ICONOS */
+.icono-app { cursor: pointer; text-align: center; width: 90px; }
+.icono-app img { width: 50px; }
+.icono-app p { font-size: 10px; color: #000; font-weight: bold; background: #fff; display: inline-block; padding: 2px; }
