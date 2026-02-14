@@ -1,3 +1,4 @@
+// Rutas Absolutas (Para evitar el 404 Not Found)
 const URL_CLICK = 'https://lyhuwu.github.io/Feliz-San-Valentin-/assets/click.mp3';
 const URL_MUSICA = 'https://lyhuwu.github.io/Feliz-San-Valentin-/assets/musica.mp3';
 
@@ -15,9 +16,8 @@ function playClick() {
 
 function iniciarSistema() {
     playClick();
-    musicaFondo.play().catch(e => console.log("Música pendiente"));
+    musicaFondo.play().catch(e => console.log("Revisa si el nombre musica.mp3 es correcto en assets"));
     
-    // Transición suave: desaparece la intro y aparece el escritorio
     document.getElementById('pantalla-inicio').style.opacity = '0';
     setTimeout(() => {
         document.getElementById('pantalla-inicio').style.display = 'none';
