@@ -18,6 +18,7 @@
     </div>
 
     <div id="escritorio" class="escritorio" style="display: none;">
+        
         <div class="burbuja-comic">Hola mi corazón, esto es para ti con mucho amor. 💌</div>
 
         <div class="fila-iconos">
@@ -83,18 +84,27 @@
                 </video>
             </div>
             <div class="caja-glass texto-box">
-                <p class="typewriter">Aquí va tu carta personalizada para Sofi...</p>
+                <p class="typewriter">Aquí va tu carta para Sofi...</p>
                 <button class="btn-pixel-diseno" onclick="mostrarModalPregunta()">TENGO UNA PREGUNTA...</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-playlist" class="overlay-clean" style="display:none;">
+        <button class="btn-cerrar-clean" onclick="cerrarModoLectura('overlay-playlist')">✖</button>
+        <div class="container-vertical">
+            <div class="caja-glass texto-box">
+                <p>Aquí va tu playlist de Spotify...</p>
             </div>
         </div>
     </div>
 
     <div id="modal-backdrop" class="modal-backdrop" style="display:none;">
         <div id="modal-pregunta" class="popup-pixel-art">
-            <h2>¿Quieres ser mi San Valentín? 💖</h2>
+            <h2 style="color: #ff69b4;">¿Quieres ser mi San Valentín? 💖</h2>
             <div class="botones-row">
-                <button class="btn-pixel-diseno" onclick="alert('¡Dijo que sí! ❤️')">¡SÍ!</button>
-                <button id="btn-no" class="btn-pixel-diseno" onmouseover="esquivar()">NO</button>
+                <button class="btn-pixel-diseno btn-si" onclick="aceptarValentin()">¡SÍ!</button>
+                <button id="btn-no" class="btn-pixel-diseno btn-no" onmouseover="esquivar()">NO</button>
             </div>
         </div>
     </div>
