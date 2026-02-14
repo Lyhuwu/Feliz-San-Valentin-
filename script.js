@@ -5,7 +5,7 @@
 // --- 1. CARGAR AUDIOS ---
 // Usamos "new Audio" para no depender del HTML
 // Asegúrate de que en tu carpeta assets los nombres sean MINÚSCULAS
-const sonidoClick = new Audio('assets/click.mp3');
+const sonidoClick = new Audio('https://lyhuwu.github.io/Feliz-San-Valentin-/assets/click.mp3');
 const musicaFondo = new Audio('assets/musica.mp3');
 
 // Configuración inicial
