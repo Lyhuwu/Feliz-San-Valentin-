@@ -1,41 +1,37 @@
-/* =========================================
-   CEREBRO DEFINITIVO (script.js)
-   ========================================= */
+// Rutas confirmadas de tus archivos
+const URL_CLICK = 'https://lyhuwu.github.io/Feliz-San-Valentin-/assets/click.mp3';
+const URL_MUSICA = 'https://lyhuwu.github.io/Feliz-San-Valentin-/assets/musica.mp3';
 
-// Usamos las rutas completas que ya probamos que sí funcionan
-const sonidoClick = new Audio('https://lyhuwu.github.io/Feliz-San-Valentin-/assets/click.mp3');
-const musicaFondo = new Audio('https://lyhuwu.github.io/Feliz-San-Valentin-/assets/musica.mp3');
+// Creación de objetos de audio
+const sonidoClick = new Audio(URL_CLICK);
+const musicaFondo = new Audio(URL_MUSICA);
 
-// Configuración de volumen al máximo (1.0)
+// Configuración de audio
 sonidoClick.volume = 1.0; 
-musicaFondo.volume = 1.0; 
+musicaFondo.volume = 0.7; 
 musicaFondo.loop = true;
 
+// Función para el sonido de click general
 function playClick() {
-    sonidoClick.currentTime = 0; 
-    sonidoClick.play().catch(e => console.log("Click bloqueado: " + e.message));
+    const claxon = sonidoClick.cloneNode();
+    claxon.play().catch(e => console.warn("Click bloqueado por el navegador"));
 }
 
-// --- 0. INICIO ---
+// Inicia el sistema, desbloquea audio y oculta intro
 function iniciarSistema() {
-    playClick(); // Aquí debe sonar el primer click
-
-    // La música solo sonará si ya subiste el archivo 'musica.mp3' a GitHub
+    playClick();
     musicaFondo.play().catch(error => {
-        console.log("Música no disponible o bloqueada: " + error.message);
+        console.error("Error al cargar la música. Revisa si musica.mp3 existe en assets.");
     });
 
-    const pantallaInicio = document.getElementById('pantalla-inicio');
-    const escritorio = document.getElementById('escritorio');
-    
-    pantallaInicio.style.opacity = '0';
+    document.getElementById('pantalla-inicio').style.opacity = '0';
     setTimeout(() => {
-        pantallaInicio.style.display = 'none';
-        escritorio.style.display = 'flex';
+        document.getElementById('pantalla-inicio').style.display = 'none';
+        document.getElementById('escritorio').style.display = 'flex';
     }, 800);
 }
 
-// --- 1. VENTANAS ---
+// Gestión de carpetas/apps
 function abrirVentana(id) {
     playClick();
     document.querySelectorAll('.ventana-pixel').forEach(v => v.style.display = 'none');
@@ -47,7 +43,7 @@ function cerrarVentana(id) {
     document.getElementById(id).style.display = 'none';
 }
 
-// --- 2. MODOS DE LECTURA ---
+// Control inteligente de música para Carta y Playlist
 function abrirModoLectura(idOverlay) {
     playClick();
     musicaFondo.pause(); 
@@ -58,22 +54,30 @@ function abrirModoLectura(idOverlay) {
 function cerrarModoLectura(idOverlay) {
     playClick();
     musicaFondo.play(); 
-    const video = document.querySelector('#overlay-carta video');
+    const video = document.getElementById('video-carta');
     if(video) video.pause();
+
     document.getElementById(idOverlay).style.display = 'none';
     document.getElementById('escritorio').style.display = 'flex';
-    document.getElementById('win-corazon').style.display = 'block';
 }
 
-// --- 3. NAVEGACIÓN ---
+// Navegación con delay para que suene el click antes de salir
 function navegar(url) {
     playClick();
-    setTimeout(() => { window.location.href = url; }, 300);
+    setTimeout(() => {
+        window.location.href = url;
+    }, 300);
 }
 
-// --- 4. PREGUNTA FINAL ---
+// Modales finales
 function mostrarModalPregunta() {
     playClick();
     document.getElementById('modal-backdrop').style.display = 'flex';
 }
-// (Agrega aquí tus funciones de aceptarValentin y esquivar si las necesitas)
+
+function volverAlEscritorio() {
+    playClick();
+    document.getElementById('modal-backdrop').style.display = 'none';
+    document.getElementById('overlay-carta').style.display = 'none';
+    document.getElementById('escritorio').style.display = 'flex';
+}
