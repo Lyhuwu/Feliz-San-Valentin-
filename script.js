@@ -1,44 +1,38 @@
 /* =========================================
-   CEREBRO CON DIAGNÓSTICO (script.js)
+   CEREBRO DEL SISTEMA (script.js)
    ========================================= */
 
-// Pruebas iniciales
-console.log("El script se cargó correctamente");
+// --- 1. CARGAR AUDIOS ---
+// Usamos "new Audio" para no depender del HTML
+// Asegúrate de que en tu carpeta assets los nombres sean MINÚSCULAS
+const sonidoClick = new Audio('assets/click.mp3');
+const musicaFondo = new Audio('assets/musica.mp3');
 
-// 1. CARGA DE AUDIO
-const clickSound = new Audio('assets/click.mp3');
-const bgm = new Audio('assets/musica.mp3');
+// Configuración inicial
+musicaFondo.loop = true;  // Que se repita infinitamente
+musicaFondo.volume = 0.5; // Volumen música (50%)
+sonidoClick.volume = 1.0; // Volumen click (100%)
 
-// Configuración
-bgm.loop = true;
-bgm.volume = 0.5;
-
+// Función para reproducir click (reiniciándolo para que suene rápido)
 function playClick() {
-    clickSound.currentTime = 0;
-    // Intentamos reproducir y si falla, mostramos por qué
-    clickSound.play().catch(error => {
-        console.log("Error click: " + error.message);
-    });
+    sonidoClick.currentTime = 0; 
+    // El .catch evita que salga error si el navegador bloquea el sonido rápido
+    sonidoClick.play().catch(e => console.log("Click pendiente de interacción..."));
 }
 
-// --- 0. INICIO DEL SISTEMA ---
+// --- 0. PANTALLA DE INICIO ---
 function iniciarSistema() {
-    // PRUEBA 1: ¿Entra a la función?
-    alert("1. Botón presionado. Intentando sonido...");
-
+    // 1. Sonar click
     playClick();
 
-    // PRUEBA 2: Intentar música
-    bgm.play()
-        .then(() => {
-            alert("2. ¡Música iniciada con éxito! 🎵");
-        })
-        .catch(error => {
-            // AQUÍ SALDRÁ EL ERROR REAL
-            alert("3. ERROR DE AUDIO: " + error.message);
-        });
+    // 2. Intentar arrancar música
+    musicaFondo.play().then(() => {
+        console.log("Música iniciada");
+    }).catch(error => {
+        console.log("Música bloqueada por el navegador hasta el próximo click");
+    });
 
-    // Ocultar pantalla (después de aceptar la alerta)
+    // 3. Transición visual
     const pantallaInicio = document.getElementById('pantalla-inicio');
     const escritorio = document.getElementById('escritorio');
     
@@ -49,9 +43,10 @@ function iniciarSistema() {
     }, 800);
 }
 
-// --- GESTIÓN DE VENTANAS (Simple) ---
+// --- 1. ABRIR/CERRAR VENTANAS ---
 function abrirVentana(id) {
     playClick();
+    // Cierra otras ventanas para mantener orden
     document.querySelectorAll('.ventana-pixel').forEach(v => v.style.display = 'none');
     document.getElementById(id).style.display = 'block';
 }
@@ -61,19 +56,19 @@ function cerrarVentana(id) {
     document.getElementById(id).style.display = 'none';
 }
 
-// --- MODOS DE LECTURA ---
+// --- 2. MODOS DE LECTURA (CARTA/PLAYLIST) ---
 function abrirModoLectura(idOverlay) {
     playClick();
-    bgm.pause(); // Pausa música
+    musicaFondo.pause(); // Pausar música de fondo para ver video/spotify
     document.getElementById('escritorio').style.display = 'none';
     document.getElementById(idOverlay).style.display = 'flex';
 }
 
 function cerrarModoLectura(idOverlay) {
     playClick();
-    bgm.play(); // Reanuda música
+    musicaFondo.play(); // Reanudar música
     
-    // Pausar video carta si existe
+    // Si hay un video (en la carta), pausarlo
     const video = document.querySelector('#overlay-carta video');
     if(video) video.pause();
 
@@ -82,13 +77,16 @@ function cerrarModoLectura(idOverlay) {
     document.getElementById('win-corazon').style.display = 'block';
 }
 
-// --- NAVEGACIÓN ---
+// --- 3. NAVEGACIÓN A OTROS PROYECTOS ---
 function navegar(url) {
     playClick();
-    setTimeout(() => { window.location.href = url; }, 300);
+    // Esperamos 300ms para que se escuche el click antes de cambiar de página
+    setTimeout(() => { 
+        window.location.href = url; 
+    }, 300);
 }
 
-// --- SAN VALENTIN ---
+// --- 4. SAN VALENTÍN (PREGUNTA) ---
 function mostrarModalPregunta() {
     playClick();
     document.getElementById('modal-backdrop').style.display = 'flex';
@@ -99,7 +97,7 @@ function aceptarValentin() {
     playClick();
     document.getElementById('modal-pregunta').style.display = 'none';
     document.getElementById('modal-exito').style.display = 'block';
-    bgm.volume = 1.0; 
+    musicaFondo.volume = 1.0; // Subir volumen para celebrar
 }
 
 function volverAlEscritorio() {
@@ -109,13 +107,16 @@ function volverAlEscritorio() {
     document.getElementById('overlay-carta').style.display = 'none';
     document.getElementById('escritorio').style.display = 'flex';
     document.querySelectorAll('.ventana-pixel').forEach(v => v.style.display = 'none');
-    bgm.volume = 0.5;
-    bgm.play();
+    
+    musicaFondo.volume = 0.5;
+    musicaFondo.play();
 }
 
 function esquivar() {
     const btn = document.getElementById('btn-no');
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 100);
-    btn.style.position = 'fixed'; btn.style.left = x + 'px'; btn.style.top = y + 'px';
+    btn.style.position = 'fixed'; 
+    btn.style.left = x + 'px'; 
+    btn.style.top = y + 'px';
 }
