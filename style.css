@@ -1,98 +1,145 @@
 /* =========================================
-   BASE SAN VALENTIN ORIGINAL
+   DISEÑO VISUAL FINAL (Ajustado a capturas)
    ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body { 
-    background: #ffdeeb; /* Color de respaldo */
-    background: url('assets/fondo-pixel.gif') no-repeat center center/cover;
+    /* El fondo morado de noche */
+    background: url('assets/fondo-pixel.gif') no-repeat center center fixed;
+    background-size: cover;
     font-family: 'Courier Prime', monospace;
     overflow: hidden;
 }
 
-/* BOTONES UNIFICADOS (Lo que pediste arreglar antes) */
-.btn-pixel-diseno {
-    background: #ff69b4;
-    color: white;
-    border: 4px solid #fff;
-    padding: 10px 20px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 10px;
-    cursor: pointer;
-    box-shadow: 4px 4px 0px #000;
-    text-transform: uppercase;
-}
-.btn-pixel-diseno:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #000; }
-
-/* PANTALLA INICIO */
+/* --- 1. PANTALLA DE INICIO --- */
 .pantalla-inicio {
     position: fixed; inset: 0; 
     background: url('assets/fondo-pixel.gif') no-repeat center center/cover;
     z-index: 1000;
-    display: flex; justify-content: center; align-items: center; text-align: center;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
     transition: opacity 0.8s;
 }
-/* Filtro oscuro para que se lea el texto */
+/* Capa oscura para que el texto resalte */
 .pantalla-inicio::before { 
     content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: -1; 
 }
 
 .titulo-intro { 
-    font-family: 'Press Start 2P'; color: #fff; margin-bottom: 20px; 
-    text-shadow: 2px 2px #ff69b4;
+    font-family: 'Press Start 2P', cursive; color: #ff9ebd; 
+    text-shadow: 3px 3px #000; margin-bottom: 20px; line-height: 1.5; font-size: 20px;
 }
-.subtitulo-intro { color: white; margin-bottom: 30px; font-weight: bold; }
+.subtitulo-intro { color: white; margin-bottom: 30px; font-weight: bold; font-size: 12px; }
 
-/* ESCRITORIO */
+/* BOTONES UNIFICADOS (Pixel Style) */
+.btn-pixel-diseno {
+    background: #ff69b4; color: white; border: 4px solid #fff;
+    padding: 12px 25px; font-family: 'Press Start 2P', cursive; font-size: 12px;
+    cursor: pointer; box-shadow: 5px 5px 0px #000; text-transform: uppercase;
+}
+.btn-pixel-diseno:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #000; }
+
+/* --- 2. ESCRITORIO --- */
 .escritorio { 
     width: 100%; height: 100vh; 
-    display: flex; flex-direction: column; align-items: center; padding-top: 50px;
+    display: flex; flex-direction: column; align-items: center; padding-top: 60px;
 }
 
 .burbuja-comic {
-    background: white; border: 3px solid black; padding: 15px; border-radius: 20px;
-    margin-bottom: 40px; font-weight: bold; text-align: center;
+    background: white; border: 3px solid black; padding: 20px; border-radius: 20px;
+    margin-bottom: 50px; font-weight: bold; text-align: center; font-family: 'Press Start 2P'; font-size: 11px;
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.3);
+    max-width: 85%;
 }
 
-/* ICONOS Y VENTANAS */
-.fila-iconos { display: flex; gap: 30px; }
-.icono-app { text-align: center; cursor: pointer; color: white; text-shadow: 1px 1px black; }
-.icono-app img { width: 60px; margin-bottom: 5px; }
+/* ICONOS DEL ESCRITORIO (Centrados y más separados) */
+.fila-iconos { 
+    display: flex; 
+    justify-content: center; /* CENTRADO PERFECTO */
+    gap: 50px; /* Más espacio entre ellos */
+    width: 100%;
+}
+.icono-app { 
+    display: flex; flex-direction: column; align-items: center; 
+    cursor: pointer; transition: transform 0.1s;
+}
+.icono-app:active { transform: scale(0.95); }
+.icono-app img { width: 70px; margin-bottom: 8px; drop-shadow: 3px 3px 0px rgba(0,0,0,0.5); }
+.icono-app p { 
+    background: black; color: white; padding: 4px 8px; border-radius: 6px; 
+    font-size: 11px; font-family: 'Press Start 2P';
+}
 
+/* --- 3. VENTANAS .EXE (Más grandes y espaciosas) --- */
 .ventana-pixel {
-    background: #f0f0f0; border: 4px solid #000; width: 320px;
-    position: absolute; top: 15%; z-index: 100;
+    position: absolute; top: 18%; 
+    background: #e0e0e0; border: 4px solid black;
+    /* AJUSTE DE TAMAÑO */
+    width: 360px; max-width: 90%; 
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+    z-index: 100;
 }
-.barra-titulo {
-    background: #ff69b4; color: #fff; padding: 5px 10px;
-    display: flex; justify-content: space-between; border-bottom: 4px solid #000;
-}
-.btn-x { background: #ff4d4d; border: 2px solid #000; color: #fff; cursor: pointer; }
-.contenido-pixel { padding: 20px; }
-.grid-pixel { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; }
 
-/* GLASSMORPHISM (Carta/Playlist) */
+.barra-titulo {
+    background: #ff69b4; color: #fff; padding: 8px 12px;
+    display: flex; justify-content: space-between; border-bottom: 4px solid black;
+    font-family: 'Press Start 2P'; font-size: 13px; align-items: center;
+}
+.btn-x { 
+    background: #ff4d4d; border: 2px solid white; color: white; 
+    cursor: pointer; width: 25px; height: 25px; font-weight: bold; box-shadow: 2px 2px 0px black;
+}
+
+.contenido-pixel { padding: 30px 20px; text-align: center; }
+
+/* GRID DE ICONOS INTERNOS (Alineación triángulo) */
+.grid-pixel { 
+    display: flex;          /* Usamos Flex en lugar de Grid para centrar el último */
+    flex-wrap: wrap;        /* Permite que bajen si no caben */
+    justify-content: center; /* Centra todo horizontalmente */
+    gap: 30px;              /* Espacio entre iconos internos */
+}
+
+.item-pixel { 
+    display: flex; flex-direction: column; align-items: center; 
+    cursor: pointer; width: 90px; /* Ancho fijo para alineación */
+}
+/* ICONOS DE ADENTRO MÁS GRANDES */
+.item-pixel img { width: 65px; margin-bottom: 8px; transition: transform 0.2s; }
+.item-pixel:hover img { transform: scale(1.1); }
+.item-pixel p { font-size: 10px; font-weight: bold; font-family: 'Press Start 2P'; line-height: 1.4; }
+
+/* --- 4. GLASSMORPHISM (Carta/Playlist) --- */
 .overlay-clean {
-    position: fixed; inset: 0; background: rgba(255, 192, 203, 0.7);
-    backdrop-filter: blur(10px); z-index: 500; display: flex; 
+    position: fixed; inset: 0; background: rgba(20, 20, 30, 0.85); /* Fondo oscuro */
+    backdrop-filter: blur(8px); z-index: 500; display: flex; 
     justify-content: center; align-items: center;
 }
 .container-vertical { width: 90%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
+
 .caja-glass { 
-    background: rgba(255, 255, 255, 0.4); border: 1px solid white;
-    border-radius: 20px; padding: 20px; margin-bottom: 15px; backdrop-filter: blur(5px);
-}
-.btn-cerrar-clean {
-    position: absolute; top: 20px; right: 20px;
-    background: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+    background: rgba(40, 40, 50, 0.8); /* Vidrio oscuro */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.3); /* Resplandor rosa suave */
+    border-radius: 20px; padding: 20px; margin-bottom: 15px; backdrop-filter: blur(10px);
+    color: white;
 }
 
-/* MODALES */
+.typewriter { font-family: 'Courier Prime'; font-size: 14px; line-height: 1.6; }
+
+.btn-cerrar-clean {
+    position: absolute; top: 20px; right: 20px;
+    background: #ff69b4; border: 2px solid white; color: white;
+    width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-weight: bold;
+    box-shadow: 0 0 10px rgba(255,105,180,0.5);
+}
+
+/* --- 5. MODALES --- */
 .modal-backdrop {
     position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-    z-index: 1000; display: flex; justify-content: center; align-items: center;
+    z-index: 2000; display: flex; justify-content: center; align-items: center;
 }
 .popup-pixel-art {
     background: #fff; border: 4px solid #000; padding: 30px; text-align: center;
+    box-shadow: 10px 10px 0 #ff69b4; width: 300px;
 }
 .botones-row { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
