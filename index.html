@@ -12,8 +12,8 @@
     <div id="pantalla-inicio" class="pantalla-inicio">
         <div class="contenido-inicio">
             <h1 class="titulo-intro">Para mi dulce,<br>dulce amada💖</h1>
-            <p class="subtitulo-intro">Hecho con mucho amor y cariño.</p>
-            <button class="btn-entrar" onclick="iniciarSistema()">▶ CLICK AQUÍ</button>
+            <p class="subtitulo-intro">Hecho con mucho amor y cariño.💌</p>
+            <button class="btn-pixel-diseno" onclick="iniciarSistema()">▶ CLICK AQUÍ</button>
         </div>
     </div>
 
@@ -23,11 +23,11 @@
         <div class="fila-iconos">
             <div class="icono-app" onclick="abrirVentana('win-corazon')">
                 <img src="assets/cora.gif" alt="Corazón">
-                <p>corazon.exe</p>
+                <p>Corazón.exe</p>
             </div>
             <div class="icono-app" onclick="abrirVentana('win-juegos')">
                 <img src="assets/icon-game.gif" alt="Juegos">
-                <p>juegos.exe</p>
+                <p>Juegos.exe</p>
             </div>
         </div>
 
@@ -63,11 +63,11 @@
                 <div class="grid-pixel">
                     <div class="item-pixel" onclick="navegar('https://lyhuwu.github.io/Tu-suerte/')">
                         <img src="assets/suerte.gif" alt="Suerte">
-                        <p>Fortuna</p>
+                        <p>Tu Suerte</p>
                     </div>
                     <div class="item-pixel" onclick="navegar('https://lyhuwu.github.io/Monkys/')">
                         <img src="assets/icon-monkey.gif" alt="Monkys">
-                        <p>Monitos</p>
+                        <p>Monkys</p>
                     </div>
                 </div>
             </div>
@@ -83,16 +83,19 @@
                 </video>
             </div>
             <div class="caja-glass texto-box">
-                <p>Aquí va tu carta para Sofi...</p>
-                <button class="btn-pregunta" onclick="mostrarModalPregunta()">¿QUIERES SER MI VALENTÍN?</button>
+                <p class="typewriter">Escribe aquí tu carta para Sofi...</p>
+                <button class="btn-pixel-diseno" onclick="mostrarModalPregunta()">TENGO UNA PREGUNTA...</button>
             </div>
         </div>
     </div>
 
     <div id="modal-backdrop" class="modal-backdrop" style="display:none;">
-        <div id="modal-exito" class="popup-pixel-art">
-            <h2>¡SABÍA QUE DIRÍAS QUE SÍ! 💖</h2>
-            <button onclick="volverAlEscritorio()">VOLVER</button>
+        <div id="modal-pregunta" class="popup-pixel-art">
+            <h2 style="color: #ff69b4;">¿Quieres ser mi San Valentín? 💖</h2>
+            <div class="botones-row">
+                <button class="btn-pixel-diseno btn-si" onclick="alert('¡Dijo que sí! ❤️')">¡SÍ!</button>
+                <button id="btn-no" class="btn-pixel-diseno btn-no" onmouseover="esquivar()">NO</button>
+            </div>
         </div>
     </div>
 
