@@ -1,12 +1,42 @@
-/* RESET Y FONDO */
+/* RESET Y FONDO GLOBAL */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body { 
     background: #ffdeeb; 
     font-family: 'Courier Prime', monospace;
     overflow: hidden;
 }
 
-/* BOTONES ESTILO PIXEL (Corrección de diseño) */
+/* LA CLAVE: Fondo con GIF en la intro */
+.pantalla-inicio {
+    position: fixed; 
+    inset: 0; 
+    background: url('assets/fondo-pixel.gif') no-repeat center center/cover;
+    z-index: 1000;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    transition: opacity 0.8s;
+}
+
+/* Overlay oscuro suave sobre el GIF de la intro para que el texto se lea bien */
+.pantalla-inicio::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
+
+.titulo-intro { 
+    font-family: 'Press Start 2P'; 
+    color: #fff; 
+    text-shadow: 4px 4px #ff69b4;
+    margin-bottom: 20px; 
+}
+
+/* BOTONES PIXEL */
 .btn-pixel-diseno {
     background: #ff69b4;
     color: white;
@@ -16,29 +46,20 @@ body {
     font-size: 12px;
     cursor: pointer;
     box-shadow: 4px 4px 0px #000;
-    text-transform: uppercase;
 }
 
-.btn-pixel-diseno:hover { background: #ff1493; }
-.btn-pixel-diseno:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #000; }
-
-/* PANTALLA INICIO */
-.pantalla-inicio {
-    position: fixed; inset: 0; background: #000; z-index: 1000;
-    display: flex; justify-content: center; align-items: center; text-align: center;
-    transition: opacity 0.8s;
-}
-
-.titulo-intro { font-family: 'Press Start 2P'; color: #ff69b4; margin-bottom: 20px; }
-
-/* ESCRITORIO */
+/* ESCRITORIO CON EL MISMO GIF */
 .escritorio { 
-    width: 100%; height: 100vh; 
+    width: 100%; 
+    height: 100vh; 
     background: url('assets/fondo-pixel.gif') no-repeat center center/cover;
-    flex-direction: column; align-items: center; padding-top: 50px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    padding-top: 50px;
 }
 
-/* VENTANAS PIXEL */
+/* VENTANAS Y DEMÁS DISEÑOS */
 .ventana-pixel {
     background: #f0f0f0; border: 4px solid #000; width: 320px;
     position: absolute; top: 20%; z-index: 100;
@@ -49,22 +70,12 @@ body {
     display: flex; justify-content: space-between; border-bottom: 4px solid #000;
 }
 
-.btn-x { background: #ff4d4d; border: 2px solid #000; color: #fff; cursor: pointer; }
-
-/* GLASSMORPHISM (Overlays) */
 .overlay-clean {
     position: fixed; inset: 0; background: rgba(255, 192, 203, 0.7);
     backdrop-filter: blur(10px); z-index: 500; display: flex; 
     justify-content: center; align-items: center;
 }
 
-.caja-glass {
-    background: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px; padding: 20px; backdrop-filter: blur(5px);
-}
-
-/* MODALES */
 .modal-backdrop {
     position: fixed; inset: 0; background: rgba(0,0,0,0.8);
     z-index: 1000; display: flex; justify-content: center; align-items: center;
