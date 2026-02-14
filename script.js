@@ -1,40 +1,45 @@
 /* =========================================
-   CEREBRO DEL SISTEMA (script.js)
+   CEREBRO DEL SISTEMA (script.js) - VERSIÓN INFALIBLE
    ========================================= */
 
-// --- 1. CONFIGURACIÓN DE AUDIO ---
-const bgm = document.getElementById('bgm');         // Música de fondo
-const clickSound = document.getElementById('sfx-click'); // Efecto click
+// --- 1. CARGA DE AUDIO DIRECTA ---
+// Usamos "new Audio" para forzar la carga del archivo que YA VIMOS QUE EXISTE.
+// Ruta relativa: busca en la carpeta assets que está junto a mí.
+const sonidoClick = new Audio('assets/click.mp3');
+const musicaFondo = new Audio('assets/musica.mp3');
 
-// Ajustar volúmenes (0.0 a 1.0)
-if (bgm) bgm.volume = 0.4;       // Música al 40% (suave)
-if (clickSound) clickSound.volume = 0.6; // Click al 60%
+// Configuración
+sonidoClick.volume = 1.0; // Volumen máximo para que lo escuches sí o sí
+musicaFondo.volume = 0.5; 
+musicaFondo.loop = true;  // Que se repita la música
 
-// Función para reproducir el sonido "Click" instantáneamente
+// Función para hacer sonar el click
 function playClick() {
-    if (clickSound) {
-        clickSound.currentTime = 0; // Reinicia el audio para clicks rápidos
-        clickSound.play().catch(e => console.log("Audio bloqueado por navegador"));
+    // Esto reinicia el audio para que puedas dar click rápido muchas veces
+    sonidoClick.currentTime = 0; 
+    
+    // Intentar reproducir y avisar si hay error
+    var promesa = sonidoClick.play();
+    
+    if (promesa !== undefined) {
+        promesa.catch(error => {
+            // Si entra aquí, es porque el navegador bloqueó el sonido
+            console.log("El navegador no dejó sonar el click todavía: " + error);
+        });
     }
 }
 
 // --- 0. INICIO DEL SISTEMA ---
 function iniciarSistema() {
-    playClick(); // Suena el primer click
-    
-    // Intentar reproducir música de fondo
-    if (bgm) {
-        bgm.play().then(() => {
-            console.log("Música de fondo iniciada");
-        }).catch(e => {
-            console.log("Autoplay bloqueado, el usuario debe interactuar más");
-        });
-    }
+    playClick(); // ¡DEBERÍA SONAR AQUÍ!
+
+    // Intentar arrancar la música
+    musicaFondo.play().catch(e => console.log("Música pendiente de interacción"));
 
     const pantallaInicio = document.getElementById('pantalla-inicio');
     const escritorio = document.getElementById('escritorio');
     
-    // Efecto visual de desaparición
+    // Animación de salida
     pantallaInicio.style.opacity = '0';
     setTimeout(() => {
         pantallaInicio.style.display = 'none';
@@ -42,10 +47,9 @@ function iniciarSistema() {
     }, 800);
 }
 
-// --- 1. GESTIÓN DE VENTANAS (CARPETAS) ---
+// --- 1. GESTIÓN DE VENTANAS ---
 function abrirVentana(id) {
     playClick();
-    // Cierra todas las ventanas antes de abrir la nueva para que no se amontonen
     document.querySelectorAll('.ventana-pixel').forEach(v => v.style.display = 'none');
     document.getElementById(id).style.display = 'block';
 }
@@ -55,50 +59,34 @@ function cerrarVentana(id) {
     document.getElementById(id).style.display = 'none';
 }
 
-// --- 2. MODOS DE LECTURA (CARTA/PLAYLIST) ---
-// Aquí ocurre la magia de pausar la música
+// --- 2. MODOS DE LECTURA ---
 function abrirModoLectura(idOverlay) {
     playClick();
-    
-    // PAUSAR MÚSICA DE FONDO (Para escuchar el video o Spotify tranquilamente)
-    if (bgm) bgm.pause();
-
-    // Ocultar escritorio y mostrar el contenido
+    musicaFondo.pause(); // Pausar música
     document.getElementById('escritorio').style.display = 'none';
     document.getElementById(idOverlay).style.display = 'flex';
 }
 
 function cerrarModoLectura(idOverlay) {
     playClick();
+    musicaFondo.play(); // Reanudar música
     
-    // REANUDAR MÚSICA DE FONDO
-    if (bgm) bgm.play();
+    // Pausar video si estaba sonando
+    const video = document.querySelector('#overlay-carta video');
+    if(video) video.pause();
 
-    // Si cerramos la carta, pausar el video por si se quedó sonando
-    const videoCarta = document.querySelector('#overlay-carta video');
-    if(videoCarta) videoCarta.pause();
-
-    // Ocultar overlay y restaurar escritorio
     document.getElementById(idOverlay).style.display = 'none';
     document.getElementById('escritorio').style.display = 'flex';
-    
-    // Volver a abrir la carpeta corazón automáticamente
     document.getElementById('win-corazon').style.display = 'block';
 }
 
-// --- 3. NAVEGACIÓN EXTERNA CON SONIDO ---
-// Usa esta función para ir a Universo, Suerte y Monitos
+// --- 3. NAVEGACIÓN EXTERNA ---
 function navegar(url) {
     playClick();
-    
-    // Esperamos 300ms (0.3 segundos) para que se escuche el click 
-    // antes de que el navegador cambie de página
-    setTimeout(() => {
-        window.location.href = url;
-    }, 300);
+    setTimeout(() => { window.location.href = url; }, 300);
 }
 
-// --- 4. LÓGICA DE SAN VALENTÍN (PREGUNTA) ---
+// --- 4. SAN VALENTÍN ---
 function mostrarModalPregunta() {
     playClick();
     document.getElementById('modal-backdrop').style.display = 'flex';
@@ -109,40 +97,23 @@ function aceptarValentin() {
     playClick();
     document.getElementById('modal-pregunta').style.display = 'none';
     document.getElementById('modal-exito').style.display = 'block';
-    
-    // Opcional: Subir volumen para celebrar
-    if (bgm) bgm.volume = 1.0; 
+    musicaFondo.volume = 1.0; // Subir volumen de celebración
 }
 
 function volverAlEscritorio() {
     playClick();
-    
-    // Resetear todo a como estaba al principio
     document.getElementById('modal-backdrop').style.display = 'none';
     document.getElementById('modal-exito').style.display = 'none';
     document.getElementById('overlay-carta').style.display = 'none';
-    
     document.getElementById('escritorio').style.display = 'flex';
-    
-    // Cerrar todas las ventanas
     document.querySelectorAll('.ventana-pixel').forEach(v => v.style.display = 'none');
-    
-    // Asegurar que música suene a volumen normal
-    if (bgm) {
-        bgm.volume = 0.4;
-        bgm.play();
-    }
+    musicaFondo.volume = 0.5;
+    musicaFondo.play();
 }
 
-// Botón "No" que se escapa
 function esquivar() {
     const btn = document.getElementById('btn-no');
-    // Generar posición aleatoria en la pantalla
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 100);
-    
-    btn.style.position = 'fixed'; 
-    btn.style.left = x + 'px'; 
-    btn.style.top = y + 'px';
-    btn.style.zIndex = 1000;
+    btn.style.position = 'fixed'; btn.style.left = x + 'px'; btn.style.top = y + 'px';
 }
